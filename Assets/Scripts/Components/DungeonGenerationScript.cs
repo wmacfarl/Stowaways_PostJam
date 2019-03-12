@@ -83,10 +83,17 @@ public class DungeonGenerationScript : MonoBehaviour
     [SerializeField]
     int NumberOfFloors;
 
+    public List<GameObject> Doodads;
+    public List<GameObject> PlotItems;
+    public List<GameObject> Debris;
+    public GameObject Teleporter;
+    public int numberOfCopiesOfEachDoodad;
     List<DungeonFloor> DungeonFloors;
+    public GameObject PlotItemSpawner;
 
     public void GenerateFloors(DungeonGenerator generator, DungeonManagerScript dungeonManager)
     {
+        DungeonFloors = new List<DungeonFloor>();
         List<GameObject> floors = new List<GameObject>();
         for (int i = 0; i < NumberOfFloors; i++)
         {
@@ -107,15 +114,76 @@ public class DungeonGenerationScript : MonoBehaviour
             {
                 newFloorGameObject.SetActive(false);
             }
-
+            DungeonFloors.Add(newFloor);
             dungeonManager.DungeonFloorGameObjects.Add(newFloorGameObject);            
         }
     }
+    
 
+    public GameObject PlaceObjectInRoom(GameObject objectToPlace, GameObject roomGameObject)
+    {
+        RoomScript roomScript = roomGameObject.GetComponent<RoomScript>();
+        Room room = roomScript.room;
+        float xMin = room.Footprint.xMin + 2;
+        float yMin = room.Footprint.yMin + 2;
+        float xMax = room.Footprint.xMax - 2;
+        float yMax = room.Footprint.yMax - 2;
+        if (xMin >= xMax || yMin >= yMax)
+        {
+            return null;
+        }
+
+        float x = Random.Range(xMin, xMax);
+        float y = Random.Range(yMin, yMax);
+        Vector2 objectPositionMin = room.Footprint.min;
+        Vector2 objectPositionMax = room.Footprint.max;
+
+        GameObject newObject = GameObject.Instantiate(objectToPlace);
+        newObject.transform.position = new Vector3(x, y, 0) ;
+        newObject.transform.parent = roomScript.transform;
+        return newObject;
+    }
 
     public void PopulateFloors(DungeonGenerator generator, DungeonManagerScript dungeonManager )
     {
+        List<GameObject> dungeonFloors = dungeonManager.DungeonFloorGameObjects;
+        foreach (GameObject doodad in Doodads)
+        {
+            for (int i = 0; i < numberOfCopiesOfEachDoodad; i++)
+            {
+                GameObject dungeonFloor = dungeonFloors[Random.Range(0,dungeonFloors.Count)];
+                DungeonFloorScript dungeonFloorScript = dungeonFloor.GetComponent<DungeonFloorScript>();
+                GameObject room = dungeonFloorScript.RoomGameObjects[Random.Range(0, dungeonFloorScript.RoomGameObjects.Count)];
+                PlaceObjectInRoom(doodad, room);
+            }
+        }
 
+        foreach (GameObject plotItem in PlotItems)
+        {
+            GameObject dungeonFloor = dungeonFloors[Random.Range(0, dungeonFloors.Count)];
+            DungeonFloorScript dungeonFloorScript = dungeonFloor.GetComponent<DungeonFloorScript>();
+            GameObject room = dungeonFloorScript.RoomGameObjects[Random.Range(0, dungeonFloorScript.RoomGameObjects.Count)];
+            PlaceObjectInRoom(PlotItemSpawner, room);
+        }
+
+
+
+        for (int i = 0; i < NumberOfFloors-1; i++)
+        {
+            int j = i + 1;
+            GameObject floorGameObject = dungeonManager.DungeonFloorGameObjects[i];
+            GameObject connectedFloorGameObject = dungeonManager.DungeonFloorGameObjects[j];
+            List<GameObject> roomGameObjects = floorGameObject.GetComponent<DungeonFloorScript>().RoomGameObjects;
+            List<GameObject> connectedFloorRoomGameObjects = connectedFloorGameObject.GetComponent<DungeonFloorScript>().RoomGameObjects;
+            GameObject roomGameObject = roomGameObjects[Random.Range(0, roomGameObjects.Count)];
+            GameObject connectedRoomGameObject = connectedFloorRoomGameObjects[Random.Range(0, connectedFloorRoomGameObjects.Count)];
+            RoomScript roomScript = roomGameObject.GetComponent<RoomScript>();
+            RoomScript connectedroomScript = connectedRoomGameObject.GetComponent<RoomScript>();
+            GameObject teleporter_1 = PlaceObjectInRoom(Teleporter, roomGameObject);
+            GameObject teleporter_2 = PlaceObjectInRoom(Teleporter, connectedRoomGameObject);
+            teleporter_1.GetComponent<TeleporterScript>().ConnectedTeleporter = teleporter_2;
+            teleporter_2.GetComponent<TeleporterScript>().ConnectedTeleporter = teleporter_1;
+        }
     }
 
     public void Start()

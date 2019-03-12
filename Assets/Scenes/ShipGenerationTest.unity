@@ -254,6 +254,21 @@ MonoBehaviour:
   CorridorPrefab: {fileID: 1287658151743653291, guid: 02d1e8555f221284b90428ffa7d1fde8,
     type: 3}
   NumberOfFloors: 3
+  Doodads:
+  - {fileID: 5323290226019947930, guid: 17703104badbb304389ec901d9ccc2b1, type: 3}
+  - {fileID: 6956328228056303675, guid: dafdda3c09bdd814a956cd8c3d4089d8, type: 3}
+  PlotItems:
+  - {fileID: 3813877315350748594, guid: 698e86ca0397f0a4fb296006be9dc8d8, type: 3}
+  - {fileID: 1089679811744707544, guid: 853005c911a4a1c4487c3daff0aaba86, type: 3}
+  - {fileID: 1581134957408222302, guid: 8f9052fdb2a19b04fb7ffa8c4e66f63b, type: 3}
+  Debris:
+  - {fileID: 1340473943444897629, guid: c7b33c861f90fed49a4a101894d13343, type: 3}
+  - {fileID: 1058883191166824996, guid: 09c0ea9b6912a2a45841fb049d81c664, type: 3}
+  Teleporter: {fileID: 2541803335366801121, guid: 8d4bdb995976eaa46b3b5437b48c7fca,
+    type: 3}
+  numberOfCopiesOfEachDoodad: 10
+  PlotItemSpawner: {fileID: 2370236926288135113, guid: e1b27fe84a54cb644ab406d174dab2eb,
+    type: 3}
 --- !u!4 &1652722480
 Transform:
   m_ObjectHideFlags: 0
