@@ -19,6 +19,9 @@ public class PlayerAnimator : MonoBehaviour
 {
     //If we have sprites for vertical movement set this to true.  Otherwise we use our horizontal sprites.
     public bool HasVerticalSprites;
+
+    //If we have separate sprites for left and right this is false.  Otherwise it is true and we flip the right sprites to get the left.
+    public bool FlipHorizontal;
     
     //Drag Sprites into these fields in the inspector when you set up your project.  Each list contains all of the frames of a given animation.
     [SerializeField]
@@ -84,8 +87,17 @@ public class PlayerAnimator : MonoBehaviour
     {   
         //Get required component
         spriteRenderer = GetComponent<SpriteRenderer>();
+        if (FlipHorizontal)
+        {
+            walkLeftSprites = walkRightSprites;
+            walkCarryLeftSprites = walkCarryRightSprites;
+            placingLeftSprites = placingRightSprites;
+            liftLeftSprites = liftRightSprites;
+            idleLeftSprites = idleRightSprites;
+            idleCarryLeftSprites = idleCarryRightSprites;
+        }
     }
-    
+
     void Update()
     {
         //Cycle the current animation based on how much time has passed since we last switched frames

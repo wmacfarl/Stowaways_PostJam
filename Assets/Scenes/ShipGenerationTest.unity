@@ -269,6 +269,8 @@ MonoBehaviour:
   numberOfCopiesOfEachDoodad: 10
   PlotItemSpawner: {fileID: 2370236926288135113, guid: e1b27fe84a54cb644ab406d174dab2eb,
     type: 3}
+  PlayerPrefab: {fileID: 5780016194063576930, guid: ec4a0ce55419a0b439a3d2af8f4c36a4,
+    type: 3}
 --- !u!4 &1652722480
 Transform:
   m_ObjectHideFlags: 0

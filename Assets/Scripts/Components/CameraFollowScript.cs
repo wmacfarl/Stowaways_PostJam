@@ -21,13 +21,17 @@ public class CameraFollowScript : MonoBehaviour
     {
         if (target == null)
         {
-            target = GameObject.Find("Player").transform;
+            GameObject player = GameObject.Find("Player");
+            if (player != null)
+            {
+                target = player.transform;
+            }
         }
     }
 
     void Update()
     {
-        if (target)
+        if (target != null)
         {
             Vector3 point = GetComponent<Camera>().WorldToViewportPoint(target.position);
             Vector3 delta = target.position+targetOffset -GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z)); 
@@ -36,8 +40,10 @@ public class CameraFollowScript : MonoBehaviour
         }
         else
         {
-            target = GameObject.Find("Player").transform;
+            GameObject player = GameObject.Find("Player");
+            if (player != null) {
+                target = player.transform;
+            }
         }
-
     }
 }

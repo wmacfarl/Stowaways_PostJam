@@ -90,6 +90,7 @@ public class DungeonGenerationScript : MonoBehaviour
     public int numberOfCopiesOfEachDoodad;
     List<DungeonFloor> DungeonFloors;
     public GameObject PlotItemSpawner;
+    public GameObject PlayerPrefab;
 
     public void GenerateFloors(DungeonGenerator generator, DungeonManagerScript dungeonManager)
     {
@@ -142,6 +143,12 @@ public class DungeonGenerationScript : MonoBehaviour
         newObject.transform.position = new Vector3(x, y, 0) ;
         newObject.transform.parent = roomScript.transform;
         return newObject;
+    }
+
+    public void PlacePlayer(DungeonGenerator dungeonGenerator, DungeonManagerScript dungeonManager)
+    {
+        GameObject room = dungeonManager.DungeonFloorGameObjects[0].GetComponent<DungeonFloorScript>().RoomGameObjects[0];
+        PlaceObjectInRoom(PlayerPrefab, room).name = "Player";
     }
 
     public void PopulateFloors(DungeonGenerator generator, DungeonManagerScript dungeonManager )
@@ -199,7 +206,7 @@ public class DungeonGenerationScript : MonoBehaviour
     
         GenerateFloors(generator, dungeonManager);
         PopulateFloors(generator, dungeonManager);
-
+        PlacePlayer(generator, dungeonManager);
         GameObject.Destroy(this.transform.gameObject);
     }
 
