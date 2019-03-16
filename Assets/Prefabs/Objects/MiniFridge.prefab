@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2719869149713164423}
   - component: {fileID: 7361347637686738434}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MiniFridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}

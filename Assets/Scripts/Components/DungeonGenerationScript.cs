@@ -335,6 +335,7 @@ public class DungeonGenerationScript : MonoBehaviour
 
         tilemapGO.AddComponent<Tilemap>();
         tilemapGO.AddComponent<TilemapRenderer>();
+        tilemapGO.AddComponent<TilemapCollider2D>();
         Grid grid = gridGO.AddComponent<Grid>();
 
         grid.transform.parent = floorGameObject.transform;
