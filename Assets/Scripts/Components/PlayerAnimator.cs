@@ -44,6 +44,7 @@ public class PlayerAnimator : MonoBehaviour
     List<Sprite> currentSpriteList;
     int currentFrameIndex;
     float currentFrameDuration;
+    public MovementFacing spriteFacing;
 
     //The time when we last switched frames.  Used to decide when to switch frames again;
     float timeAtLastFrame = 0;
@@ -111,6 +112,7 @@ public class PlayerAnimator : MonoBehaviour
             }
             spriteRenderer.sprite = currentSpriteList[currentFrameIndex];
         }
+
     }
 
     //Each movementState has its own cycle duration
@@ -143,12 +145,35 @@ public class PlayerAnimator : MonoBehaviour
         if (!HasVerticalSprites)
         {
             SetVerticalSprites(movementFacing);
+            if (movementFacing == MovementFacing.RIGHT)
+            {
+                spriteFacing = MovementFacing.RIGHT;
+            }
+            if (movementFacing == MovementFacing.LEFT)
+            {
+                spriteFacing = MovementFacing.LEFT;
+            }
+        }
+        if (FlipHorizontal)
+        {
+            if (movementFacing == MovementFacing.LEFT)
+            {
+                //            spriteRenderer.flipX = true;
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+            else if (movementFacing == MovementFacing.RIGHT)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+                //            spriteRenderer.flipX = false;
+            }
         }
 
         currentSpriteList = GetAnimationSprites(movementState, movementFacing, carryingState);
         currentFrameDuration = GetCycleDuration(movementState) / currentSpriteList.Count;
         currentFrameIndex = 0;
         timeAtLastFrame = Time.time;
+        spriteRenderer.sprite = currentSpriteList[currentFrameIndex];
+
     }
 
     //If we don't have vertical sprites, we should use whichever horizontal sprites correspond to our most recent facing as vertical sprites
@@ -298,7 +323,8 @@ public class PlayerAnimator : MonoBehaviour
             }
         }
 
+
+
         throw new System.Exception("NO ANIMATION STATE.  Facing = " + movementFacing + ", State = " + movementState);
     }
-
 }

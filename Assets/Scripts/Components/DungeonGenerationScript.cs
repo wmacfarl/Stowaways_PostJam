@@ -119,7 +119,6 @@ public class DungeonGenerationScript : MonoBehaviour
             dungeonManager.DungeonFloorGameObjects.Add(newFloorGameObject);            
         }
     }
-    
 
     public GameObject PlaceObjectInRoom(GameObject objectToPlace, GameObject roomGameObject)
     {
@@ -288,6 +287,8 @@ public class DungeonGenerationScript : MonoBehaviour
                 Vector2 northDoorPosition = new Vector2(corridor.Footprint.xMin, corridor.Footprint.yMax);
                 newDoor1 = GameObject.Instantiate(doorToInstantiate, southDoorPosition, Quaternion.identity);
                 newDoor2 = GameObject.Instantiate(doorToInstantiate, northDoorPosition, Quaternion.identity);
+                BoxFill(tilemap, CorridorFloorTile, southDoorPosition, southDoorPosition + new Vector2(2, 0));
+                BoxFill(tilemap, CorridorFloorTile, northDoorPosition, northDoorPosition + new Vector2(2, 0));
             }
             else
             {
@@ -296,6 +297,8 @@ public class DungeonGenerationScript : MonoBehaviour
                 Vector2 eastDoorPosition = new Vector2(corridor.Footprint.xMax, corridor.Footprint.yMin);
                 newDoor1 = GameObject.Instantiate(doorToInstantiate, westDoorPosition, Quaternion.identity);
                 newDoor2 = GameObject.Instantiate(doorToInstantiate, eastDoorPosition, Quaternion.identity);
+                BoxFill(tilemap, CorridorFloorTile, eastDoorPosition, eastDoorPosition + new Vector2(0,2));
+                BoxFill(tilemap, CorridorFloorTile, westDoorPosition, westDoorPosition + new Vector2(0,2));
             }
 
             dungeonFloorScript.DoorGameObjects.Add(newDoor1);

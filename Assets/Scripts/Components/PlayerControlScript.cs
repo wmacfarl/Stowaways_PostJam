@@ -245,7 +245,9 @@ public class PlayerControlScript : MonoBehaviour
     void CompletePlaceObject()
     {
         float putDownDistance = GetPlaceDistance();
-        objectIAmCarrying.GetComponent<PickupableScript>().GetPutDown(MovementFacingToVector2(currentMovementFacing) * putDownDistance);
+        Vector2 placeDirection = GetPlaceDirection();
+
+        objectIAmCarrying.GetComponent<PickupableScript>().GetPutDown(placeDirection * putDownDistance);
         currentCarryingState = CarryingState.NOT_CARRYING;
         currentMovementState = MovementState.IDLING;
         objectIAmCarrying = null;
@@ -285,7 +287,8 @@ public class PlayerControlScript : MonoBehaviour
         objectIAmCarrying.GetComponent<BoxCollider2D>().enabled = true; ;
 
         //These distances are calculated assuming that the origin of the sprites/colliders for the player and the object is the bottom center
-        if (currentMovementFacing == MovementFacing.RIGHT || currentMovementFacing == MovementFacing.LEFT)
+        if (currentMovementFacing == MovementFacing.RIGHT || currentMovementFacing == MovementFacing.LEFT ||         
+            GetComponent<PlayerAnimator>().HasVerticalSprites == false)
         {
             placeDistance = collider.bounds.extents.x + objectIAmCarrying.GetComponent<BoxCollider2D>().bounds.extents.x;
         }
@@ -304,13 +307,32 @@ public class PlayerControlScript : MonoBehaviour
         //Turn the collider back off in case our placement fails for some reason and we end up still holding the object.
         objectIAmCarrying.GetComponent<BoxCollider2D>().enabled = false;
 
+        if (animator.FlipHorizontal)
+        {
+            placeDistance = placeDistance * transform.localScale.x;
+        }
+
         return placeDistance;
+    }
+
+    Vector2 GetPlaceDirection()
+    {
+        Vector2 placeDirection;
+        if (animator.HasVerticalSprites == false)
+        {
+            placeDirection = MovementFacingToVector2(animator.spriteFacing);
+        }
+        else
+        {
+            placeDirection = MovementFacingToVector2(currentMovementFacing);
+        }
+        return placeDirection;
     }
 
     //Returns true if there is space in front of me to place the object I am holding
     bool CanIPlaceObject()
     {
-        return objectIAmCarrying.GetComponent<PickupableScript>().CanIBePutDown(MovementFacingToVector2(currentMovementFacing) * GetPlaceDistance());
+        return objectIAmCarrying.GetComponent<PickupableScript>().CanIBePutDown(GetPlaceDirection() * GetPlaceDistance());
     }
 
     //Returns the closest pickupable object in front of me.  This handles the case where I am adjacent to and facing two different objects

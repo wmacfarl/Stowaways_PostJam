@@ -17,6 +17,7 @@ using UnityEngine;
 public class PickupableScript : MonoBehaviour
 {
     //Required Component
+
     new BoxCollider2D collider;
     void Start()
     {
@@ -27,9 +28,9 @@ public class PickupableScript : MonoBehaviour
     public void GetPickedUp(GameObject pickerUpperGameObject, Vector2 carryOffset)
     {
         transform.parent = pickerUpperGameObject.transform;
-        GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";
         collider.enabled = false;
         transform.localPosition = carryOffset;
+//        GetComponent<ZLayerOrderingScript>().enabled = false;
     }
 
     //Called by the object triggering the pick-up.  A picked-up object has its collider disabled and is just a child of the carrier.
@@ -37,8 +38,8 @@ public class PickupableScript : MonoBehaviour
     {
         transform.localPosition = placeDistance;
         transform.parent = null;
-        GetComponent<SpriteRenderer>().sortingLayerName = "Default";
         collider.enabled = true;
+  //      GetComponent<ZLayerOrderingScript>().enabled = true;
     }
 
     //Returns true if there is space for my collider placeDistance away from the origin of the object I am currently parented to.  
@@ -53,9 +54,10 @@ public class PickupableScript : MonoBehaviour
 
         foreach (Collider2D overlappingCollider in overlappingColliders)
         {
-            if (overlappingCollider != collider)
+            if (overlappingCollider != collider && overlappingCollider.transform != transform.parent)
             {
                 transform.localPosition = carryPosition;
+                Debug.Log("Overlapping Collider = " + overlappingCollider.gameObject);
                 return false;
             }
         }
