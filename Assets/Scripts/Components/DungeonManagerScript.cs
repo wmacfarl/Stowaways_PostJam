@@ -6,6 +6,10 @@ using UnityEngine;
 
 public class DungeonManagerScript : MonoBehaviour
 {
+
+    public RoomScript CurrentRoomScript;
+    public CorridorScript CurrentCorridorScript;
+
     public List<GameObject> DungeonFloorGameObjects;
     public GameObject PlayerGameObject;
 
@@ -13,4 +17,15 @@ public class DungeonManagerScript : MonoBehaviour
     {
         DungeonFloorGameObjects = new List<GameObject>();
     }
+
+    public void SetCurrentRoom(RoomScript roomScript)
+    {
+        CurrentRoomScript = roomScript;
+    }
+
+    public void SetCurrentCorridor(CorridorScript corridorScript)
+    {
+        CurrentCorridorScript = corridorScript;
+    }
+
 }

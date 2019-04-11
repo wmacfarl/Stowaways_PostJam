@@ -36,7 +36,9 @@ public class PickupableScript : MonoBehaviour
     //Called by the object triggering the pick-up.  A picked-up object has its collider disabled and is just a child of the carrier.
     public void GetPutDown(Vector2 placeDistance)
     {
+
         transform.localPosition = placeDistance;
+
         transform.parent = null;
         collider.enabled = true;
   //      GetComponent<ZLayerOrderingScript>().enabled = true;

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1065012601340733763}
   - component: {fileID: 3355206136097611770}
   - component: {fileID: 4598028592279438765}
-  - component: {fileID: 6709823770144683266}
   - component: {fileID: 1067884573321024328}
   m_Layer: 0
   m_Name: EastWestDoorPrefab
@@ -69,8 +68,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -803890609
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 16ed3c8beba7a56429ba9adb84dd2fee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -127,18 +126,6 @@ MonoBehaviour:
   openSprite: {fileID: 21300000, guid: 57c2ada94ce0a5444a889c641f9efe40, type: 3}
   closedSprite: {fileID: 21300000, guid: 16ed3c8beba7a56429ba9adb84dd2fee, type: 3}
   IsOpen: 0
---- !u!114 &6709823770144683266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8203019517789060166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f49cbdbfbe0c3894b9f277cc237e49fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &1067884573321024328
 BoxCollider2D:
   m_ObjectHideFlags: 0

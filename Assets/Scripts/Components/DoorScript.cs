@@ -21,6 +21,7 @@ public class DoorScript : MonoBehaviour
     public bool IsOpen;
     BoxCollider2D collisionCollider;
     BoxCollider2D triggerCollider;
+    DungeonManagerScript dungeonManager;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,11 @@ public class DoorScript : MonoBehaviour
                 collisionCollider = collider;
             }
         }
+    }
+
+    private void Awake()
+    {
+        dungeonManager = Object.FindObjectOfType<DungeonManagerScript>();
     }
 
     // Update is called once per frame
@@ -60,6 +66,7 @@ public class DoorScript : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             IsOpen = true;
+            dungeonManager.SetCurrentCorridor(Corridor.GetComponent<CorridorScript>());
         }
     }
 
@@ -68,6 +75,10 @@ public class DoorScript : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             IsOpen = false;
+            if (Corridor.GetComponent<CorridorScript>().containPlayer == false)
+            {
+                dungeonManager.SetCurrentCorridor(null);
+            }
         }
     }
 }

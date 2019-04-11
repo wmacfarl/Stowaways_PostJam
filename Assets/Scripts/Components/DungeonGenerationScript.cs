@@ -257,6 +257,9 @@ public class DungeonGenerationScript : MonoBehaviour
             roomObject.transform.position = room.Footprint.position;
             roomObject.GetComponent<RoomScript>().room = room;
             roomObject.transform.parent = newFloorGO.transform;
+            roomObject.GetComponent<BoxCollider2D>().size = room.Footprint.size;
+            roomObject.GetComponent<BoxCollider2D>().offset = room.Footprint.size * .5f;
+            roomObject.GetComponent<RoomScript>().setMesh();
 
         }
     }
@@ -277,6 +280,11 @@ public class DungeonGenerationScript : MonoBehaviour
             corridorGameObject.GetComponent<CorridorScript>().corridor = corridor;
             corridorGameObject.transform.position = corridor.Footprint.position;
             corridorGameObject.transform.parent = newFloorGO.transform;
+            corridorGameObject.GetComponent<BoxCollider2D>().size = corridor.Footprint.size;
+            corridorGameObject.GetComponent<BoxCollider2D>().offset = corridor.Footprint.size * .5f;
+
+
+
             GameObject doorToInstantiate;
             GameObject newDoor1;
             GameObject newDoor2;
